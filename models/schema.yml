@@ -2,4 +2,4 @@ version: 2
 
 models:
   - name: my_custom_transformation
-    description: "{{ doc('my_custom_transformation') }}"
+    description: "Transformation of raw JSON data into columns"
