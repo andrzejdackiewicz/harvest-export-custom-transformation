@@ -1,4 +1,4 @@
-name: 'custom_transformation'
+name: 'time_entries_transformation'
 version: '1.0.0'
 config-version: 2
 
@@ -16,5 +16,5 @@ clean-targets: # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 models:
-  custom_transformation:
+  time_entries_transformation:
     +materialized: table

@@ -1,5 +1,5 @@
 version: 2
 
 models:
-  - name: my_custom_transformation
+  - name: time_entries
     description: "Transformation of raw JSON data into columns"

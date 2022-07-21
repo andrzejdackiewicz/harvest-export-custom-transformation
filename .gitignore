@@ -5,6 +5,7 @@ dbt_packages/
 logs/
 .idea
 .user.yml
+*.iml
 
 # data-pipelines-cli
 /build/
