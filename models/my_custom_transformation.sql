@@ -1,6 +1,50 @@
-with xxx as (
-    select *
-    from `harvest-351907.harvest_airbyte_export._airbyte_raw_time_entries`
-)
-
-select * from xxx
+SELECT
+    CAST(JSON_VALUE(_airbyte_data, "$.id") AS INT) AS id,
+    CAST(JSON_VALUE(_airbyte_data, "$.spent_date") AS timestamp) AS spent_date,
+    CAST(JSON_VALUE(_airbyte_data, "$.hours") AS FLOAT64) AS hours,
+    CAST(JSON_VALUE(_airbyte_data, "$.hours_without_timer") AS FLOAT64) AS hours_without_timer,
+    CAST(JSON_VALUE(_airbyte_data, "$.rounded_hours") AS FLOAT64) AS rounded_hours,
+    JSON_VALUE(_airbyte_data, "$.notes") AS notes,
+    CAST(JSON_VALUE(_airbyte_data, "$.is_locked") AS BOOL) AS is_locked,
+    JSON_VALUE(_airbyte_data, "$.locked_reason") AS locked_reason,
+    CAST(JSON_VALUE(_airbyte_data, "$.is_closed") AS BOOL) AS is_closed,
+    CAST(JSON_VALUE(_airbyte_data, "$.is_billed") AS BOOL) AS is_billed,
+    CAST(JSON_VALUE(_airbyte_data, "$.timer_started_at") AS TIMESTAMP) AS timer_started_at,
+    PARSE_TIME("%H:%M", JSON_VALUE(_airbyte_data, "$.started_time")) AS started_time,
+    PARSE_TIME("%H:%M", JSON_VALUE(_airbyte_data, "$.ended_time")) AS ended_time,
+    CAST(JSON_VALUE(_airbyte_data, "$.is_running") AS BOOL) AS is_running,
+    CAST(JSON_VALUE(_airbyte_data, "$.billable") AS BOOL) AS billable,
+    CAST(JSON_VALUE(_airbyte_data, "$.budgeted") AS BOOL) AS budgeted,
+    CAST(JSON_VALUE(_airbyte_data, "$.billable_rate") AS FLOAT64) AS billable_rate,
+    CAST(JSON_VALUE(_airbyte_data, "$.cost_rate") AS FLOAT64) AS cost_rate,
+    CAST(JSON_VALUE(_airbyte_data, "$.created_at") AS TIMESTAMP) AS created_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.updated_at") AS TIMESTAMP) AS updated_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.user.id") AS INT) AS user_id,
+    JSON_VALUE(_airbyte_data, "$.user.name") AS user_name,
+    CAST(JSON_VALUE(_airbyte_data, "$.client.id") AS INT) AS client_id,
+    JSON_VALUE(_airbyte_data, "$.client.name") AS client_name,
+    JSON_VALUE(_airbyte_data, "$.client.currency") AS client_currency,
+    CAST(JSON_VALUE(_airbyte_data, "$.project.id") AS INT) AS project_id,
+    JSON_VALUE(_airbyte_data, "$.project.name") AS project_name,
+    JSON_VALUE(_airbyte_data, "$.project.code") AS project_code,
+    CAST(JSON_VALUE(_airbyte_data, "$.task.id") AS INT) AS task_id,
+    JSON_VALUE(_airbyte_data, "$.task.name") AS task_name,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.id") AS INT) AS user_assignment_id,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.is_project_manager") AS BOOL) AS user_assignment_is_project_manager,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.is_active") AS BOOL) AS user_assignment_is_active,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.use_default_rates") AS BOOL) AS user_assignment_use_default_rates,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.budget") AS FLOAT64) AS user_assignment_budget,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.created_at") AS TIMESTAMP) AS user_assignment_created_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.updated_at") AS TIMESTAMP) AS user_assignment_updated_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.user_assignment.hourly_rate") AS FLOAT64) AS user_assignment_hourly_rate,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.id") AS INT) AS task_assignment_id,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.billable") AS BOOLEAN) AS task_assignment_billable,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.is_active") AS BOOLEAN) AS task_assignment_is_active,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.created_at") AS TIMESTAMP) AS task_assignment_created_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.updated_at") AS TIMESTAMP) AS task_assignment_updated_at,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.hourly_rate") AS FLOAT64) AS task_assignment_hourly_rate,
+    CAST(JSON_VALUE(_airbyte_data, "$.task_assignment.budget") AS FLOAT64) AS task_assignment_budget,
+    JSON_VALUE(_airbyte_data, "$.invoice") AS invoice,
+    IFNULL(JSON_VALUE(_airbyte_data, "$.external_reference"), Null) AS external_reference
+FROM
+    `harvest-351907.harvest_airbyte_export._airbyte_raw_time_entries`
